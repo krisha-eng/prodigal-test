@@ -30,4 +30,7 @@
   float: right;
   margin: 16px 0 16px 24px;
 }
-
+.add-remove-btn {
+  margin: 0px 10px 15px 10px;
+  float: left;
+}
