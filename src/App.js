@@ -2,8 +2,15 @@ import './App.css';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { Select, Typography, Divider } from 'antd';
+import Part1 from './Part1';
+import Part2 from './Part2';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+import { Layout, Menu, Breadcrumb } from 'antd';
 import { Table } from 'antd';
+import { Select, Typography, Divider } from 'antd';
+
+const { Header, Content, Footer } = Layout;
 const { Column } = Table;
 const { Option } = Select;
 const { Title } = Typography;
@@ -73,49 +80,78 @@ function App() {
     }
   }
   return (
+    <BrowserRouter>
     <div className="App">
-      <Title level={3}>Prodigal Test</Title>
-      <div className="flex-h">
-        <div className="flex-v">
-          {/* <Title level={5}>Agents</Title> */}
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ width: '300px' }}
-            maxTagCount={2}
-            placeholder="Select Agents"
-            onChange={handleChange}>
-            {Options}
-          </Select>
-        </div>
+        <Layout className="layout">
+          <Header>
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+              {/* {new Array(15).fill(null).map((_, index) => {
+              const key = index + 1;
+              return <Menu.Item key={key}>{`nav ${key}`}</Menu.Item>;
+            })} */}
+              <Menu.Item key="Part1"> <a href="/">Part 1</a> </Menu.Item>
+              <Menu.Item key="Part2"><a href="/Part2">Part 2</a></Menu.Item>
+            </Menu>
+          </Header>
+          <Content style={{ padding: '0 50px' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>List</Breadcrumb.Item>
+              <Breadcrumb.Item>App</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="site-layout-content">
+              {/* Content
+            <Title level={3}>Prodigal Test</Title> */}
+              <div className="flex-h">
+                <div className="flex-v">
+                  {/* <Title level={5}>Agents</Title> */}
+                  <Select
+                    mode="multiple"
+                    allowClear
+                    style={{ width: '300px' }}
+                    maxTagCount={2}
+                    placeholder="Select Agents"
+                    onChange={handleChange}>
+                    {Options}
+                  </Select>
+                </div>
 
-        <div className="flex-v">
-          {/* <Title level={5}>Call duration</Title> */}
-          <Select
-            allowClear
-            style={{ width: '300px' }}
-            placeholder="Select Call Duration"
-            defaultValue={[]}
-            onChange={handleChangeDuration}>
-            <Option key="0-50">0 - 50</Option>
-            <Option key="50-100">50 - 100</Option>
-            <Option key="100-150">100 - 150</Option>
-            <Option key="150-200">150 - 200</Option>
-            <Option key="200-250">200 - 250</Option>
-            <Option key="250-400">250 - 400</Option>
-          </Select>
-        </div>
+                <div className="flex-v">
+                  {/* <Title level={5}>Call duration</Title> */}
+                  <Select
+                    allowClear
+                    style={{ width: '300px' }}
+                    placeholder="Select Call Duration"
+                    defaultValue={[]}
+                    onChange={handleChangeDuration}>
+                    <Option key="0-50">0 - 50</Option>
+                    <Option key="50-100">50 - 100</Option>
+                    <Option key="100-150">100 - 150</Option>
+                    <Option key="150-200">150 - 200</Option>
+                    <Option key="200-250">200 - 250</Option>
+                    <Option key="250-400">250 - 400</Option>
+                  </Select>
+                </div>
+              </div>
+              <Divider />
+              <Table dataSource={tableData} pagination={{ defaultPageSize: 5 }}>
+                <Column title="Call ID" dataIndex="call_id" key="call_id" sorter={{ compare: (a, b) => a.call_id - b.call_id }} />
+                <Column title="Agent" dataIndex="agent_id" key="agent_id" sorter={{ compare: (a, b) => (a.agent_id > b.agent_id) - (a.agent_id < b.agent_id) }} />
+                <Column title="Call Duration" dataIndex="call_time" key="call_time" sorter={{ compare: (a, b) => a.call_time - b.call_time }} />
+              </Table>
+            </div>
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>Prodigal Assessment Sumbission by Krisha</Footer>
+        </Layout>
+
+        <Route exact path="/" component={Part1} />
+        <Route path="/Part2" component={Part2} />
+
+
+
       </div>
-      <Divider />
-      <Table dataSource={tableData} pagination={{ defaultPageSize: 5 }}>
-        <Column title="Call ID" dataIndex="call_id" key="call_id" sorter={{ compare: (a, b) => a.call_id - b.call_id }} />
-        <Column title="Agent" dataIndex="agent_id" key="agent_id" sorter={{ compare: (a, b) => (a.agent_id > b.agent_id) - (a.agent_id < b.agent_id) }} />
-        <Column title="Call Duration" dataIndex="call_time" key="call_time" sorter={{ compare: (a, b) => a.call_time - b.call_time }} />
-      </Table>
-
-
-
-    </div>
+    </BrowserRouter>
   );
 }
 
