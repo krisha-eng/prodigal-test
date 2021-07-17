@@ -89,8 +89,10 @@ function Part2() {
     function handleChangeLabelSelection(value) {
         setchangedLabels(value);
     }
-    function handleCloseModal() {
+    function handleCloseModalAdd() {
         setisAdd(!isAdd);
+    }
+    function handleCloseModalDelete() {
         setisRemove(!isRemove);
     }
     function handleAddLabels() {
@@ -166,7 +168,7 @@ function Part2() {
                             centered
                             visible="true"
                             onOk={handleAddLabels}
-                            onCancel={handleCloseModal}
+                        onCancel={handleCloseModalAdd}
                             width="400px">
                             <Select
                                 mode="multiple"
@@ -184,7 +186,7 @@ function Part2() {
                             centered
                             visible="true"
                             onOk={handleDeleteLabels}
-                            onCancel={handleCloseModal}
+                        onCancel={handleCloseModalDelete}
                             width="400px">
                             <Select
                                 mode="multiple"
