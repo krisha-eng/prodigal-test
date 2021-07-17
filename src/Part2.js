@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { Table, Tag, Button, Modal } from 'antd';
+import { Table, Tag, Button, Modal, Spin } from 'antd';
 import { Select, Typography, Divider } from 'antd';
 
 const { Header, Content, Footer } = Layout;
@@ -49,6 +49,7 @@ function Part2() {
     const [selectedRows, setselectedRows] = useState([]);
     const [isAdd, setisAdd] = useState(false);
     const [isRemove, setisRemove] = useState(false);
+    const [isLoading, setisLoading] = useState(true);
 
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -65,6 +66,7 @@ function Part2() {
         }).then(response => response.json())
             .then(function (json) {
                 setcallList(json.data.call_data.map(obj => ({ key: obj.call_id, ...obj })));  //adding keys
+                setisLoading(false);
                 // console.log(json.data.call_data);
             })
             .catch(err => console.warn(err));
@@ -205,6 +207,7 @@ function Part2() {
                         columns={columns}
                         dataSource={callList}
                         pagination={{ defaultPageSize: 5 }}
+                        loading={{ indicator: <div><Spin size="large" delay={200} /></div>, spinning: isLoading }}
                     />
                 </div>
             </Content>

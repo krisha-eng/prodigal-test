@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { Table } from 'antd';
+import { Table, Spin } from 'antd';
 import { Select, Typography, Divider } from 'antd';
 
 const { Header, Content, Footer } = Layout;
@@ -20,6 +20,7 @@ function Part1() {
     const [FilteredAgentsArr, setFilteredAgentsArr] = useState([]);
     const [maxCallArr, setmaxCallArr] = useState([]);
     const [tableData, settableData] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
 
     useEffect(() => {
         fetch("https://damp-garden-93707.herokuapp.com/getlistofagents")
@@ -61,7 +62,10 @@ function Part1() {
             body: JSON.stringify(_data)
             // headers: { "Content-type": "application/json; charset=UTF-8" }
         }).then(response => response.json())
-            .then(json => settableData(json.data))
+            .then(function (json) {
+                settableData(json.data);
+                setisLoading(false);
+            })
             .catch(err => console.warn(err));
     }, [FilteredAgentsArr, AllAgentsArr, maxCallArr]);
 
@@ -121,11 +125,13 @@ function Part1() {
                         </div>
                     </div>
                     <Divider />
-                    <Table dataSource={tableData} pagination={{ defaultPageSize: 5 }}>
+                    {/* {isLoading && <Spin size="large" delay={200} />} */}
+                    <Table dataSource={tableData} pagination={{ defaultPageSize: 5 }} loading={{ indicator: <div><Spin size="large" delay={200} /></div>, spinning: isLoading }}>
                         <Column title="Call ID" dataIndex="call_id" key="call_id" sorter={{ compare: (a, b) => a.call_id - b.call_id }} />
                         <Column title="Agent" dataIndex="agent_id" key="agent_id" sorter={{ compare: (a, b) => (a.agent_id > b.agent_id) - (a.agent_id < b.agent_id) }} />
                         <Column title="Call Duration" dataIndex="call_time" key="call_time" sorter={{ compare: (a, b) => a.call_time - b.call_time }} />
                     </Table>
+
                 </div>
             </Content>
         </div>
