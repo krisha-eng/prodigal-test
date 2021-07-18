@@ -2,16 +2,11 @@ import './App.css';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { BrowserRouter, Route } from 'react-router-dom';
 
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { Table, Tag, Button, Modal, Spin } from 'antd';
-import { Select, Typography, Divider } from 'antd';
+import { Layout, Breadcrumb, Table, Tag, Button, Modal, Spin, Select } from 'antd';
 
-const { Header, Content, Footer } = Layout;
-const { Column } = Table;
+const { Content } = Layout;
 const { Option } = Select;
-const { Title } = Typography;
 
 const columns = [
     {
@@ -53,7 +48,6 @@ function Part2() {
     const [labelList, setlabelList] = useState([]);
     const [changedLabels, setchangedLabels] = useState([]);
     const [selectedRowKeys, setselectedRowKeys] = useState([]);
-    const [selectedRows, setselectedRows] = useState([]);
     const [isAdd, setisAdd] = useState(false);
     const [isRemove, setisRemove] = useState(false);
     const [isLoading, setisLoading] = useState(true);
@@ -61,7 +55,6 @@ function Part2() {
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            setselectedRows(selectedRows);
             setselectedRowKeys(selectedRowKeys);
         }
     };
@@ -74,7 +67,6 @@ function Part2() {
             .then(function (json) {
                 setcallList(json.data.call_data.map(obj => ({ key: obj.call_id, ...obj })));  //adding keys
                 setisLoading(false);
-                // console.log(json.data.call_data);
             })
             .catch(err => console.warn(err));
     }, [isAdd, isRemove]);
@@ -85,7 +77,6 @@ function Part2() {
             headers: { "user_id": "24b456" }
         }).then(response => response.json())
             .then(function (Data) {
-                // setAllAgentsArr(Data.data.unique_label_list);
                 var arr = [];
                 for (let i = 0; i < Data.data.unique_label_list.length; i++) {
                     arr.push(<Option key={Data.data.unique_label_list[i]}>{Data.data.unique_label_list[i]}</Option>);
@@ -122,7 +113,6 @@ function Part2() {
             body: JSON.stringify(_data)
         }).then(response => response.json())
             .then(function (json) {
-                // setcallList(json.data.call_data.map(obj => ({ key: obj.call_id, ...obj })));  //adding keys
                 setisAdd(!isAdd);
                 console.log(json);
             })
@@ -147,7 +137,6 @@ function Part2() {
             body: JSON.stringify(_data)
         }).then(response => response.json())
             .then(function (json) {
-                // setcallList(json.data.call_data.map(obj => ({ key: obj.call_id, ...obj })));  //adding keys
                 setisRemove(!isRemove);
                 console.log(json);
             })

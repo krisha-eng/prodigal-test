@@ -2,16 +2,12 @@ import './App.css';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { BrowserRouter, Route } from 'react-router-dom';
 
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { Table, Spin } from 'antd';
-import { Select, Typography, Divider } from 'antd';
+import { Layout, Breadcrumb, Table, Spin, Select, Divider } from 'antd';
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 const { Column } = Table;
 const { Option } = Select;
-const { Title } = Typography;
 
 function Part1() {
 
@@ -74,7 +70,6 @@ function Part1() {
     }, [FilteredAgentsArr, AllAgentsArr, maxCallArr]);
 
     function handleChange(value) {
-        // console.log(value);
         setFilteredAgentsArr(value);
     }
     function handleChangeDuration(value) {
@@ -95,11 +90,8 @@ function Part1() {
                     <Breadcrumb.Item>Part 1</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="site-layout-content">
-                    {/* Content
-            <Title level={3}>Prodigal Test</Title> */}
                     <div className="flex-h">
                         <div className="flex-v">
-                            {/* <Title level={5}>Agents</Title> */}
                             <Select
                                 mode="multiple"
                                 allowClear
@@ -112,7 +104,6 @@ function Part1() {
                         </div>
 
                         <div className="flex-v">
-                            {/* <Title level={5}>Call duration</Title> */}
                             <Select
                                 allowClear
                                 style={{ width: '300px' }}
@@ -129,7 +120,6 @@ function Part1() {
                         </div>
                     </div>
                     <Divider />
-                    {/* {isLoading && <Spin size="large" delay={200} />} */}
                     <Table dataSource={tableData} pagination={{ defaultPageSize: 5 }} loading={{ indicator: <div><Spin size="large" delay={200} /></div>, spinning: isLoading }}>
                         <Column title="Call ID" dataIndex="call_id" key="call_id" sorter={{ compare: (a, b) => a.call_id - b.call_id }} />
                         <Column title="Agent" dataIndex="agent_id" key="agent_id" sorter={{ compare: (a, b) => (a.agent_id > b.agent_id) - (a.agent_id < b.agent_id) }} />
