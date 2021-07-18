@@ -17,17 +17,24 @@ const columns = [
     {
         title: 'Call Id',
         dataIndex: 'call_id',
+        sorter: { compare: (a, b) => a.call_id - b.call_id }
     },
     {
         title: 'Label',
         dataIndex: 'label_id',
+        sorter: { compare: (a, b) => a.label_id.length - b.label_id.length },
         render: tags => (
             <>
                 {tags.map(tag => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
+                    let color;
+                    if (tag.length > 6) {
+                        color = 'geekblue';
+                    } else if (tag.length > 4) {
+                        color = 'green';
+                    } else if (tag.length > 2) {
+                        color = 'pink';
+                    };
+
                     return (
                         <Tag color={color} key={tag}>
                             {tag.toUpperCase()}
@@ -153,7 +160,7 @@ function Part2() {
         <div className="App">
             <Content style={{ padding: '0 50px' }}>
                 <Breadcrumb style={{ margin: '16px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
+                    <Breadcrumb.Item>Assessment</Breadcrumb.Item>
                     <Breadcrumb.Item>Part 2</Breadcrumb.Item>
                 </Breadcrumb>
 

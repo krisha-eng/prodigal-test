@@ -57,16 +57,20 @@ function Part1() {
         }
         _data.info.filter_time_range = [...maxCallArr];
         console.log(_data);
-        fetch('https://damp-garden-93707.herokuapp.com/getfilteredcalls', {
-            method: "POST",
-            body: JSON.stringify(_data)
-            // headers: { "Content-type": "application/json; charset=UTF-8" }
-        }).then(response => response.json())
-            .then(function (json) {
+        //The spin indicator disappears before data load, so making async await call
+        (async () => {
+            try {
+                const response = await fetch('https://damp-garden-93707.herokuapp.com/getfilteredcalls', {
+                    method: "POST",
+                    body: JSON.stringify(_data)
+                });
+                const json = await response.json();
                 settableData(json.data);
                 setisLoading(false);
-            })
-            .catch(err => console.warn(err));
+            } catch (e) {
+                console.error(e);
+            }
+        })();
     }, [FilteredAgentsArr, AllAgentsArr, maxCallArr]);
 
     function handleChange(value) {
@@ -87,7 +91,7 @@ function Part1() {
         <div className="App">
             <Content style={{ padding: '0 50px' }}>
                 <Breadcrumb style={{ margin: '16px 0' }}>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
+                    <Breadcrumb.Item>Assessment</Breadcrumb.Item>
                     <Breadcrumb.Item>Part 1</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="site-layout-content">
@@ -141,3 +145,16 @@ function Part1() {
 }
 
 export default Part1;
+
+
+
+// fetch('https://damp-garden-93707.herokuapp.com/getfilteredcalls', {
+        //     method: "POST",
+        //     body: JSON.stringify(_data)
+        //     // headers: { "Content-type": "application/json; charset=UTF-8" }
+        // }).then(response => response.json())
+        //     .then(function (json) {
+        //         settableData(json.data);
+        //         setisLoading(false);
+        //     })
+        //     .catch(err => console.warn(err));
