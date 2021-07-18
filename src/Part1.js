@@ -120,7 +120,7 @@ function Part1() {
                         </div>
                     </div>
                     <Divider />
-                    <Table dataSource={tableData} pagination={{ defaultPageSize: 5 }} loading={{ indicator: <div><Spin size="large" delay={200} /></div>, spinning: isLoading }}>
+                    <Table dataSource={tableData} pagination={{ defaultPageSize: 5, simple: "true" }} loading={{ indicator: <div><Spin size="large" delay={200} /></div>, spinning: isLoading }}>
                         <Column title="Call ID" dataIndex="call_id" key="call_id" sorter={{ compare: (a, b) => a.call_id - b.call_id }} />
                         <Column title="Agent" dataIndex="agent_id" key="agent_id" sorter={{ compare: (a, b) => (a.agent_id > b.agent_id) - (a.agent_id < b.agent_id) }} />
                         <Column title="Call Duration" dataIndex="call_time" key="call_time" sorter={{ compare: (a, b) => a.call_time - b.call_time }} />

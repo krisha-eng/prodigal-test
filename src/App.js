@@ -25,7 +25,7 @@ function App() {
         <Layout className="layout">
           <Header>
             <div className="logo" />
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['Part1']}>
               <Menu.Item key="Part1"> <Link to="/">Part 1</Link> </Menu.Item>
               <Menu.Item key="Part2"><Link to="/Part2">Part 2</Link></Menu.Item>
             </Menu>
